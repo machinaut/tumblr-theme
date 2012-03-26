@@ -135,7 +135,7 @@ h2 {
 }
 
 h3 {
-    font-size: 1.4em;
+    font-size: 1.17em;
     margin: 1em 0;
 }
 
@@ -172,9 +172,7 @@ strong {
 }
 
 blockquote {
-    margin: 1em;
-    padding: 0 30px;
-    border-left: 8px solid lightblue;
+    margin: 1em 40px;
 }
 
 /*
