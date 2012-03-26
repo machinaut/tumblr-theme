@@ -1,29 +1,40 @@
 package main
 import (
-	"fmt"
-	"io"
+	"io/ioutil"
+	"log"
 	"os"
-	"template"
+	"text/template"
 )
 
-
-const signTemplateHTML = `
-<html>
-  <body>
-		{{html .}}
-	</body>
-</html>
-`
-var signTemplate = template.Must(template.New("sign").Parse(signTemplateHTML))
-
-func sign(w io.Writer, d string) {
-	err := signTemplate.Execute(w,d)
+func readfile(filename string) string {
+	file, err := os.Open(filename)
 	if err != nil {
-		fmt.Println("ERROR:",err)
+		log.Fatal("Error Open("+filename+"):",err)
 	}
+
+	buf, err := ioutil.ReadAll(file)
+	if err != nil {
+		log.Fatal("Error ReadAll("+filename+"):",err)
+	}
+
+	return string(buf)
+}
+
+type Tvmblr struct {
+	JS,CSS string
 }
 
 func main() {
-	fmt.Println("Hello, world");
-	sign(os.Stdout,"barf")
+	tvmblrHTML := readfile("tvmblr.html")
+	//js := readfile("application.js")+readfile("_functions.js")+readfile("functions.js")+readfile("posts.js")
+	js := ""
+	css := readfile("application.css")+readfile("normalize.css")+readfile("posts.css")
+
+	tvmblrTemplate := template.Must(template.New("tvmblr").Parse(tvmblrHTML))
+	tvmblr := Tvmblr{js,css}
+
+	err := tvmblrTemplate.Execute(os.Stdout,tvmblr)
+	if err != nil {
+		log.Fatal("Error Template.Execute():",err)
+	}
 }
