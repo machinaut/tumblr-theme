@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # build css files
-lessc posts.less > posts.css
+lessc tvmblr.less > tvmblr.css
 
 # build go program
 go build
