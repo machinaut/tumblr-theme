@@ -4,7 +4,7 @@
 lessc tvmblr.less > tvmblr.css
 
 # build go program
-go build
+go build -o buildr
 
 # run go program and generate output
-./tvmblr > output.html
+./buildr > theme.html
